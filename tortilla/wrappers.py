@@ -255,7 +255,9 @@ class Client(object):
 
         # return our findings and try to make it a bit nicer
         if has_body:
-            return bunchify(parsed_response)
+            result = bunchify(parsed_response)
+            result['headers'] = r.headers
+            return result
         return None
 
 
