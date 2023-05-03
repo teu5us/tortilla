@@ -255,7 +255,13 @@ class Client(object):
 
         # return our findings and try to make it a bit nicer
         if has_body:
-            parsed_response['headers'] = r.headers
+            units = r.headers.get('Units', None)
+            keys = ('used', 'left', 'limit')
+            if units:
+                values = map(int, units.split('/'))
+            else:
+                values = (None, None, None)
+            parsed_response['units'] = dict(zip(keys, values))
             return bunchify(parsed_response)
         return None
 
